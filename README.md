@@ -1,6 +1,6 @@
-# intro
+# Dicee
 
-A new Flutter project.
+this is my first flutter project while learning dart and flutter.
 
 ## Getting Started
 

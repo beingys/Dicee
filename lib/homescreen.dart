@@ -1,7 +1,5 @@
-import 'dart:html';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,15 +8,48 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   int leftDiceNumber = 1;
   int rightDiceNumber = 1;
 
-  void roll() {
-    setState(() {
-      leftDiceNumber = Random().nextInt(6) + 1;
-      rightDiceNumber = Random().nextInt(6) + 1;
+  late AnimationController _controller;
+  late CurvedAnimation animation;
+  @override
+  void initState() {
+    super.initState();
+    animate();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  animate() {
+    _controller =
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+
+    animation = CurvedAnimation(parent: _controller, curve: Curves.bounceOut);
+    animation.addListener(() {
+      setState(() {});
+      // print(_controller.value);
     });
+    animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          leftDiceNumber = Random().nextInt(6) + 1;
+          rightDiceNumber = Random().nextInt(6) + 1;
+        });
+        // print('completed');
+        _controller.reverse();
+      }
+    });
+  }
+
+  void roll() {
+    _controller.forward();
   }
 
   @override
@@ -30,18 +61,28 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Image(
-                      image: AssetImage('images/dice-png-$leftDiceNumber.png'),
+                  child: GestureDetector(
+                    onDoubleTap: roll,
+                    child: Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Image(
+                        height: 200 - (animation.value) * 200,
+                        image: AssetImage(
+                            'assets/images/dice-png-$leftDiceNumber.png'),
+                      ),
                     ),
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Image(
-                      image: AssetImage('images/dice-png-$rightDiceNumber.png'),
+                  child: GestureDetector(
+                    onDoubleTap: roll,
+                    child: Padding(
+                      padding: EdgeInsets.all(15),
+                      child: Image(
+                        height: 200 - (animation.value) * 200,
+                        image: AssetImage(
+                            'assets/images/dice-png-$rightDiceNumber.png'),
+                      ),
                     ),
                   ),
                 )
