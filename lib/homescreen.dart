@@ -55,46 +55,47 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Dicee")), //appBar
-        body: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Row(
-              children: [
-                Expanded(
-                  child: GestureDetector(
-                    onDoubleTap: roll,
-                    child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Image(
-                        height: 200 - (animation.value) * 200,
-                        image: AssetImage(
-                            'assets/images/dice-png-$leftDiceNumber.png'),
-                      ),
+      appBar: AppBar(title: Text("Dicee")), //appBar
+      body: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onDoubleTap: roll,
+                  child: Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Image(
+                      height: 200 - (animation.value) * 200,
+                      image: AssetImage(
+                          'assets/images/dice-png-$leftDiceNumber.png'),
                     ),
                   ),
                 ),
-                Expanded(
-                  child: GestureDetector(
-                    onDoubleTap: roll,
-                    child: Padding(
-                      padding: EdgeInsets.all(15),
-                      child: Image(
-                        height: 200 - (animation.value) * 200,
-                        image: AssetImage(
-                            'assets/images/dice-png-$rightDiceNumber.png'),
-                      ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onDoubleTap: roll,
+                  child: Padding(
+                    padding: EdgeInsets.all(15),
+                    child: Image(
+                      height: 200 - (animation.value) * 200,
+                      image: AssetImage(
+                          'assets/images/dice-png-$rightDiceNumber.png'),
                     ),
                   ),
-                )
-              ],
-            ),
-            ElevatedButton(
-              onPressed: roll,
-              child: Text('Roll'),
-              style: ElevatedButton.styleFrom(
-                  textStyle: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-          ]),
-        ));
+                ),
+              )
+            ],
+          ),
+          ElevatedButton(
+            onPressed: roll,
+            child: Text('Roll'),
+            style: ElevatedButton.styleFrom(
+                textStyle: TextStyle(fontWeight: FontWeight.bold)),
+          ),
+        ]),
+      ),
+    );
   }
 }
